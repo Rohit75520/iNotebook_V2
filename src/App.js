@@ -22,14 +22,14 @@ function App() {
               <Route exact path="/" element={login ? <Home /> : <login />}>
                 <Login />
               </Route>
+              <Route exact path="/signup">
+                <Signup />
+              </Route>
               <Route exact path="/home">
                 <Home />
               </Route>
               <Route exact path="/about">
                 <About />
-              </Route>
-              <Route exact path="/signup">
-                <Signup />
               </Route>
             </Switch>
           </div>

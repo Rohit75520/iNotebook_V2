@@ -1,11 +1,22 @@
 import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import  NoteContext  from '../context/notes/noteContext'; // Update the import path based on your project structure
+import NoteContext from '../context/notes/noteContext'; // Update the import path based on your project structure
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 
 const Navbar = () => {
-  const { isAuthenticated } = useContext(NoteContext);
+  const { isAuthenticated, logout ,setIsAuthenticated} = useContext(NoteContext); // Assuming you have a logout function in your context
   const location = useLocation();
+  const history = useHistory();
 
+  const handleLogout = () => {
+    window.localStorage.removeItem("isLoggedIn")
+    history.push('/')
+    setIsAuthenticated(false)
+
+  };
+  
+  console.log("isAuthenticated:", isAuthenticated);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -43,27 +54,22 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-            console.log({isAuthenticated})
+          {isAuthenticated ? (
             <form className="d-flex">
-  {isAuthenticated ? (
-    <>
-      <button className="btn btn-outline-success mx-1">
-        Search
-      </button>
-      <i className="fas fa-arrow-right mx-1"></i> {/* Corrected class name */}
-    </>
-  ) : (
-    <>
-      <Link className="btn btn-primary mx-1" to="/" role="button">
-        Login
-      </Link>
-      <Link className="btn btn-primary mx-1" to="/signup" role="button">
-        Signup
-      </Link>
-    </>
-  )}
-</form>
-
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+              <button className="btn btn-outline-success mx-1">Search</button>
+              <button className="btn btn-outline-danger mx-1" onClick={handleLogout}>Logout</button>
+            </form>
+          ) : (
+            <form className="d-flex">
+              <Link className="btn btn-primary mx-1" to="/" role="button">
+                Login
+              </Link>
+              <Link className="btn btn-primary mx-1" to="/signup" role="button">
+                Signup
+              </Link>
+            </form>
+          )}
         </div>
       </div>
     </nav>

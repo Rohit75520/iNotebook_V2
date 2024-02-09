@@ -94,8 +94,12 @@ const NoteState = (props) => {
     setNotes(newNotes);
   }
 
+  const logout = () => {
+    setIsAuthenticated(false);
+  }
+
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes, isAuthenticated, setIsAuthenticated }}>
+    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes, isAuthenticated, setIsAuthenticated, logout }}>
       {props.children}
     </NoteContext.Provider>
   )

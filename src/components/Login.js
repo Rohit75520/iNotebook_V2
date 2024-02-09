@@ -1,16 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState,useContext} from 'react'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import NoteContext from '../context/notes/noteContext';
 
 
 const Login = (props) => {
     const [credentials, setCredentials] = useState({email: "", password: ""}) 
     let history = useHistory();
     // const store = await response.json();
-
+    const { isAuthenticated, logout ,setIsAuthenticated} = useContext(NoteContext);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        window.localStorage.setItem("isLoggedIn", true)
+        window.localStorage.setItem("isloggedIn", true)
         const response = await fetch("http://localhost:5000/api/auth/login/", {
             method: 'POST',
             headers: {
@@ -22,6 +23,7 @@ const Login = (props) => {
         const json = await response.json()
         // console.log(json);
         if (json.success){
+            setIsAuthenticated(true);
             // Save the auth token and redirect
             localStorage.setItem('token', json.authtoken); 
             history.push("/home");
