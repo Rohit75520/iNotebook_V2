@@ -25,7 +25,7 @@ const Signup = () => {
         if (!response.ok) {
             throw new Error("Failed to create ")
         }
-        history.push('/login')
+        history.push('/')
         console.log("user is created successfully");
         } catch (error) {
             console.error('Error creating user:', error.message);
