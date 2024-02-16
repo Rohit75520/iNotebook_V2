@@ -10,7 +10,9 @@ const NoteState = (props) => {
   
 
   // Get all Notes
-  const t="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjViMTI0N2JiM2RlOGFkYzAwOWVmZTIzIn0sImlhdCI6MTcwNjE2ODMwOH0.BqWx73ygsQd7kbC6pqmCLOyEsucB9IdvTtVekBcde94"
+  // const t="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVjZTA5MWIxZDExZmI4MjE2MmQ3NmZkIn0sImlhdCI6MTcwODAwMTU2M30.GXtxeD_r0ys8pTA7vzLp5c_mVcfcqZiphxbOvoqSFZg"
+  const t = localStorage.getItem('token')
+  // console.log(t);
  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjViY2RkYjI4MDYzZTA2N2ExZDg0Y2I0In0sImlhdCI6MTcwNzExNTYzMn0.zO0RAPKzPoP_GobqlmDIdR5z8O741zcsR6lE7LJGDFE";
   const getNotes = async () => {
     // API Call 
@@ -95,6 +97,9 @@ const NoteState = (props) => {
   }
 
   const logout = () => {
+    // console.log("logout");
+    window.localStorage.removeItem('token')
+    window.localStorage.setItem('isloggedIn', false)
     setIsAuthenticated(false);
   }
 

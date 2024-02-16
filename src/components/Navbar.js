@@ -8,15 +8,21 @@ const Navbar = () => {
   const { isAuthenticated, logout ,setIsAuthenticated} = useContext(NoteContext); // Assuming you have a logout function in your context
   const location = useLocation();
   const history = useHistory();
+  // const login = Boolean
+  // const login = JSON.parse(window.localStorage.getItem("isloggedIn"))
 
   const handleLogout = () => {
     window.localStorage.removeItem("isLoggedIn")
     history.push('/')
     setIsAuthenticated(false)
-
+    logout()
   };
+  const isLogin=JSON.parse(localStorage.getItem('isloggedIn'))
+
+  const alertBox = () => {
+    window.alert('please make sure that you have logged in')
+  }
   
-  console.log("isAuthenticated:", isAuthenticated);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -38,9 +44,9 @@ const Navbar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                className={`nav-link ${location.pathname === '/home' ? 'active' : ''}`}
                 aria-current="page"
-                to="/"
+                to={isLogin ? "/home" :"/loginError"}
               >
                 Home
               </Link>
@@ -54,10 +60,10 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          {isAuthenticated ? (
+          {isLogin ? (
             <form className="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success mx-1">Search</button>
+              {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={search} onChange={(e) => setSearch(e.target.value)}/>
+              <button className="btn btn-outline-success mx-1">Search</button> */}
               <button className="btn btn-outline-danger mx-1" onClick={handleLogout}>Logout</button>
             </form>
           ) : (

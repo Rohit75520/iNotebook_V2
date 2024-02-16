@@ -12,8 +12,7 @@ const Notes = () => {
     const [updatedTag, setUpdatedTag] = useState("");
     const [editedNote, setEditedNote] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const t="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjViMTI0N2JiM2RlOGFkYzAwOWVmZTIzIn0sImlhdCI6MTcwNjE2ODMwOH0.BqWx73ygsQd7kbC6pqmCLOyEsucB9IdvTtVekBcde94"
-
+    const t = localStorage.getItem('token')
 
     useEffect(() => {
         getNotes();

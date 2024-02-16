@@ -26,6 +26,8 @@ const Login = (props) => {
             setIsAuthenticated(true);
             // Save the auth token and redirect
             localStorage.setItem('token', json.authtoken); 
+            localStorage.setItem('isloggedIn', true); 
+           
             history.push("/home");
         }
         else{

@@ -7,10 +7,13 @@ import NoteState from "./context/notes/NoteState";
 import {Alert} from "./components/Alert";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+// import LoginError from "./components/LoginError";
+import LoginError from "./components/LoginError";
 
 
 function App() {
-  const login = window.localStorage.getItem("isLoggedIn")
+  const login = JSON.parse(window.localStorage.getItem("isLoggedIn"))
+  // console.log(login);
   return (
     <>
       <NoteState>
@@ -25,11 +28,14 @@ function App() {
               <Route exact path="/signup">
                 <Signup />
               </Route>
-              <Route exact path="/home">
+              <Route exact path="/home" element={login ? <Home /> : <login />}>
                 <Home />
               </Route>
               <Route exact path="/about">
                 <About />
+              </Route>
+              <Route exact path="/loginError">
+                <LoginError />
               </Route>
             </Switch>
           </div>

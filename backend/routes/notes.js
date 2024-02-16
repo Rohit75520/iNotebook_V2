@@ -6,6 +6,7 @@ const Note = require('../models/Note');
 
 // Route 1: get loggedin user Details usign : POST "/api/notes/fetchallnotes". Login required
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
+    // console.log("fetchallnotes");
     try {
         const notes = await Note.find({ user: req.user.id });
         res.json(notes)
@@ -28,6 +29,7 @@ router.post('/addnote',fetchuser, [
         if(!errors.isEmpty()){
             return res.status(400).json({ errors: errors.array() });
         }
+        console.log(req.user.id);
         const note = new Note({
             title, description, tag, user: req.user.id
         })
