@@ -1,14 +1,14 @@
-import React, { useContext, useRef} from "react";
+import React, { useContext} from "react";
 import NoteContext from "../context/notes/noteContext";
 
 const Noteitem = ({ note, openEditModal }) => {
-  const host = "http://localhost:5000";
+  // const host = "http://localhost:5000";
   const context = useContext(NoteContext);
   const { deleteNote } = context;
-  const t = localStorage.getItem('token')
+  // const t = localStorage.getItem('token')
 
 
-  const ref = useRef(null);
+  // const ref = useRef(null);
 
   const handleDelete = async () => {
     try {

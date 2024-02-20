@@ -1,32 +1,29 @@
-import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import NoteContext from '../context/notes/noteContext'; // Update the import path based on your project structure
+import React, { useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
+import NoteContext from "../context/notes/noteContext"; // Update the import path based on your project structure
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-
 const Navbar = () => {
-  const { isAuthenticated, logout ,setIsAuthenticated} = useContext(NoteContext); // Assuming you have a logout function in your context
+  const { isAuthenticated, logout, setIsAuthenticated } =
+    useContext(NoteContext); // Assuming you have a logout function in your context
   const location = useLocation();
   const history = useHistory();
   // const login = Boolean
   // const login = JSON.parse(window.localStorage.getItem("isloggedIn"))
 
   const handleLogout = () => {
-    window.localStorage.removeItem("isLoggedIn")
-    history.push('/')
-    setIsAuthenticated(false)
-    logout()
+    window.localStorage.removeItem("isLoggedIn");
+    history.push("/");
+    setIsAuthenticated(false);
+    logout();
   };
-  const isLogin=JSON.parse(localStorage.getItem('isloggedIn'))
+  const isLogin = JSON.parse(localStorage.getItem("isloggedIn"));
 
-  const alertBox = () => {
-    window.alert('please make sure that you have logged in')
-  }
-  
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand" to={isLogin ? "/home" :"/loginError"}>
+        <Link className="navbar-brand" to={isLogin ? "/home" : "/loginError"}>
           iNotebook
         </Link>
         <button
@@ -44,16 +41,20 @@ const Navbar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname === '/home' ? 'active' : ''}`}
+                className={`nav-link ${
+                  location.pathname === "/home" ? "active" : ""
+                }`}
                 aria-current="page"
-                to={isLogin ? "/home" :"/loginError"}
+                to={isLogin ? "/home" : "/loginError"}
               >
                 Home
               </Link>
             </li>
             <li className="nav-item">
               <Link
-                className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
+                className={`nav-link ${
+                  location.pathname === "/about" ? "active" : ""
+                }`}
                 to="/about"
               >
                 About
@@ -62,9 +63,15 @@ const Navbar = () => {
           </ul>
           {isLogin ? (
             <form className="d-flex">
+              {/* search bar */}
               {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={search} onChange={(e) => setSearch(e.target.value)}/>
               <button className="btn btn-outline-success mx-1">Search</button> */}
-              <button className="btn btn-outline-danger mx-1" onClick={handleLogout}>Logout</button>
+              <i
+                className="fa-sharp fa-solid fa-right-from-bracket"
+                onClick={handleLogout}
+                style={{ color: "white" }}
+              ></i>
+              
             </form>
           ) : (
             <form className="d-flex">
