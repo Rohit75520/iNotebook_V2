@@ -68,6 +68,7 @@ const Navbar = () => {
               <button className="btn btn-outline-success mx-1">Search</button> */}
               <i
                 className="fa-sharp fa-solid fa-right-from-bracket"
+
                 onClick={handleLogout}
                 style={{ color: "white" }}
               ></i>
