@@ -29,7 +29,7 @@ router.post('/addnote',fetchuser, [
         if(!errors.isEmpty()){
             return res.status(400).json({ errors: errors.array() });
         }
-        console.log(req.user.id);
+        // console.log(req.user.id);
         const note = new Note({
             title, description, tag, user: req.user.id
         })
@@ -67,7 +67,6 @@ router.put('/updatenote/:id',fetchuser, async (req, res) => {
 
 // Route 4: Delete a existing Note using : DELETE "/api/notes/deletenote/:id". Login required
 router.delete('/deletenote/:id',fetchuser, async (req, res) => {
-        console.log('backend');
         const { title, description, tag } = req.body;
 
         let note = await Note.findById(req.params.id);

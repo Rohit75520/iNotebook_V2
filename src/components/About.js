@@ -19,6 +19,12 @@ const About = () => {
             <p>
                 Thank you for choosing our app to be your companion in your journey of productivity and organization. We're constantly improving and adding new features to enhance your experience, so stay tuned for updates!
             </p>
+            <h4>
+                Developer:
+            </h4>
+            <p>
+                Rohit Cheduluri 
+            </p>
         </div>
       )
     }
