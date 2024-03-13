@@ -70,7 +70,7 @@ const Navbar = () => {
                 className="fa-sharp fa-solid fa-right-from-bracket"
 
                 onClick={handleLogout}
-                style={{ color: "white" }}
+                style={{ color: "red" }}
               ></i>
               
             </form>
