@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const fetchuser = require('../middleware/fetchuser');
 const router = express.Router();
 const Note = require('../models/Note');
+// const File = require('../models/File')
 
 // Route 1: get loggedin user Details usign : POST "/api/notes/fetchallnotes". Login required
 router.get('/fetchallnotes', fetchuser, async (req, res) => {

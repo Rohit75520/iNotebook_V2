@@ -1,6 +1,6 @@
 const connectToMongo = require('./db')
 const express = require('express')
-const cors = require('cors')
+const cors = require('cors');
 
 connectToMongo();
 const app = express()
@@ -11,6 +11,7 @@ app.use(express.json())
 
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/notes', require('./routes/notes'))
+app.use('/api/upload', require('./routes/upload'))
 
 app.listen(port, () => {
     console.log(`iNotebook backend listening at http://localhost:${port}`)

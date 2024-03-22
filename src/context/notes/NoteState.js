@@ -96,6 +96,30 @@ const NoteState = (props) => {
     setNotes(newNotes);
   }
 
+  const uploadFile = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch(`${host}/api/upload`, {
+        method: 'POST',
+        headers: {
+          'auth-token': t,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        console.error('Failed to upload file:', response.statusText);
+        return;
+      }
+
+      console.log('File uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading file:', error.message);
+    }
+  };
+
   const logout = () => {
     // console.log("logout");
     window.localStorage.removeItem('token')
@@ -104,10 +128,22 @@ const NoteState = (props) => {
   }
 
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes, isAuthenticated, setIsAuthenticated, logout }}>
+    <NoteContext.Provider
+      value={{
+        notes,
+        addNote,
+        deleteNote,
+        editNote,
+        uploadFile,
+        getNotes,
+        isAuthenticated,
+        setIsAuthenticated,
+        logout,
+      }}
+    >
       {props.children}
     </NoteContext.Provider>
-  )
+  );
 
 }
 export default NoteState;
