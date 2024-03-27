@@ -1,9 +1,11 @@
 import React, {useContext, useState} from 'react'
 import noteContext from "../context/notes/noteContext"
 import axios from 'axios';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const AddNote = () => {
     const context = useContext(noteContext);
+    const history = useHistory
     const {addNote} = context;
     const host = "http://localhost:5000"
     // const {uploadFile} = context;

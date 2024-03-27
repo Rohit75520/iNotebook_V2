@@ -9,6 +9,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 // import LoginError from "./components/LoginError";
 import LoginError from "./components/LoginError";
+import Invoice from "./components/Invoice";
 
 
 function App() {
@@ -36,6 +37,9 @@ function App() {
               </Route>
               <Route exact path="/loginError">
                 <LoginError />
+              </Route>
+              <Route exact path='/invoice'>
+                <Invoice />
               </Route>
             </Switch>
           </div>

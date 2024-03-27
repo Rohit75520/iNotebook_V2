@@ -53,6 +53,16 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${
+                  location.pathname === "/invoice" ? "active" : ""
+                }`}
+                to="/invoice"
+              >
+                Invoice
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link ${
                   location.pathname === "/about" ? "active" : ""
                 }`}
                 to="/about"
@@ -60,6 +70,7 @@ const Navbar = () => {
                 About
               </Link>
             </li>
+            
           </ul>
           {isLogin ? (
             <form className="d-flex">

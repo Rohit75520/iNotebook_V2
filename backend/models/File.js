@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const fileSchema = new Schema({
     filename: { type: String, required: true },
+    user: { type: String, ref: 'user' },
     date: { type: Date, default: Date.now},
     size: { type: String, required: true},
     user: { type: Schema.Types.ObjectId, ref: 'User' }

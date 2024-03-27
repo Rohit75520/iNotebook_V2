@@ -6,7 +6,9 @@ const NoteState = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const notesInitial = [{title:"", description:"", tag:"" }]
   const [notes, setNotes] = useState([notesInitial])
+  const [file, setFile] = useState()
 
+  // const setFile = e.target.files[0]
   
 
   // Get all Notes
@@ -120,6 +122,34 @@ const NoteState = (props) => {
     }
   };
 
+  const getfile = async () => {
+    // API Call 
+
+    const formData = new FormData();
+      formData.append('file', file);
+
+      try{
+    const response = await fetch(`${host}/api/upload/getfile/${formData.file}`,{
+      method: 'GET',
+      headers: {
+        'auth-token' : t,
+      },
+    });
+    if (!response.ok) {
+      console.error('Failed to fetch notes:', response.statusText);
+      return;
+    }
+  
+
+    const json = await response.json() 
+    // console.log(json);
+    setFile(json)
+  }catch (error) {
+    console.error();
+  }
+}
+
+
   const logout = () => {
     // console.log("logout");
     window.localStorage.removeItem('token')
@@ -139,6 +169,7 @@ const NoteState = (props) => {
         isAuthenticated,
         setIsAuthenticated,
         logout,
+        getfile,
       }}
     >
       {props.children}
