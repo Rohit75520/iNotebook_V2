@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const GridFsStream = require('gridfs-stream');
 const mongoURI = "mongodb://localhost:27017/inotebook"
 
 const connectToMongo = async () => {
@@ -8,9 +9,12 @@ const connectToMongo = async () => {
         useUnifiedTopology: true,
     });
     console.log("connected to mongo successfully");
-}catch{
+}catch(error){
         console.error('Error connecting to MongoDB:', error);
     }
 }
+
+// const conn = mongoose.connection;
+// const gfs = GridFsStream(conn.db, mongoose.mongo)
 
 module.exports = connectToMongo;

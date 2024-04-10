@@ -31,6 +31,7 @@ const Notes = () => {
     const history = useHistory();
 
     const handleUpdate = async (noteId) => {
+        console.log(noteId);
         try {
             const response = await fetch(`${host}/api/notes/updatenote/${noteId}`, {
                 method: 'PUT',
@@ -59,6 +60,8 @@ const Notes = () => {
         }
     };
 
+    const [imageUrl, setImageUrl] = useState(null);
+
     const openEditModal = (note) => {
         setEditedNote(note);
         setShowModal(true);
@@ -66,7 +69,7 @@ const Notes = () => {
 
     return (
         <>
-            <AddNote />
+            <AddNote imageUrl={imageUrl}/>
             <div className="row my-3">
                 <h2>Your Notes</h2>
                 <div className="container mx-2">
@@ -74,7 +77,7 @@ const Notes = () => {
                 </div>
                 
                 {notes.map((note) => {
-                    return <Noteitem key={note._id} openEditModal ={openEditModal} note={note} />
+                    return <Noteitem key={note._id} openEditModal ={openEditModal} note={note} imageUrl={imageUrl} setImageUrl={setImageUrl} openImageInNewTab={openImageInNewTab} />
                 })}
             </div>
 

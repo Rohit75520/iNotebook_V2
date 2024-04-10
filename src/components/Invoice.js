@@ -2,23 +2,38 @@ import React, { useRef } from "react";
 import "../Invoice.css";
 import { usePDF } from "@react-pdf/renderer";
 import generatePDF from 'react-to-pdf'
-// import {pdfFromReact} from 'generate-pdf-from-react-html'
+import {pdfFromReact} from 'generate-pdf-from-react-html'
+import jsPDF from "jspdf";
 // import { content } from "html2canvas/dist/types/css/property-descriptors/content";
-
 const Invoice = () => {
 
     const convertToPDF = () => {
-    //     pdfFromReact(".element-to-print","invoice","p",true, true )
-        generatePDF(targetRef, {filename: 'invoice.pdf'})
+        // pdfFromReact(".element-to-print","invoice","p",true, true )
+        // generatePDF(targetRef, {filename: 'invoice.pdf'})
+        var doc = new jsPDF()
+        const element = document.getElementById("element-to-print");
+
+
+        doc.html(element, {
+          callback: function(doc) {
+            doc.save('invoice.pdf')
+          },
+          margin:[0,0,0,0],
+          autoPaging: 'slice',
+          x:0,
+          y:0,
+          width:190,
+          windowWidth: 675
+        })
     };
 // const { toPDF, targetRef } = usePDF({filename: 'invoice.pdf'})    
     const targetRef = useRef();
 
   return (
     <>
-      <div 
-      paperSize = 'A4'
-    //   className="element-to-print"
+      <div
+      className="element-to-print"
+      id="element-to-print"
       >
         {/* <header className="cd__intro">
           <h1> Invoice Template Example </h1>
@@ -124,7 +139,7 @@ const Invoice = () => {
                 <div className="panel-heading">
                   <h3 className="panel-title">Services / Products</h3>
                 </div>
-                <table className="table table-bordered table-condensed">
+                <table className="table table-bordered">
                   <thead>
                     <tr>
                       <th>Item / Details</th>
@@ -207,7 +222,7 @@ const Invoice = () => {
                 </table>
               </div>
               <div className="panel panel-default">
-                <table className="table table-bordered table-condensed">
+                <table className="table table-bordered">
                   <thead>
                     <tr>
                       <td className="text-center col-xs-1">Sub Total</td>
@@ -277,10 +292,9 @@ const Invoice = () => {
               <strong>~ACME~</strong>
             </div>
           </div>
-          {/* <!-- END EDMO HTML (Happy Coding!)--> */}
         </main>
       </div>
-        <button className="btn btn-primary" onClick={convertToPDF} style={{display:"flex",alignItems:"center",justifyContent:"center",alignContent:"center",align:'right'}}> 
+        <button className="btn btn-primary" onClick={convertToPDF}> 
           Download
         </button>
     </>

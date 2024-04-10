@@ -6,7 +6,6 @@ const NoteState = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const notesInitial = [{title:"", description:"", tag:"" }]
   const [notes, setNotes] = useState([notesInitial])
-  const [file, setFile] = useState()
 
   // const setFile = e.target.files[0]
   
@@ -122,33 +121,29 @@ const NoteState = (props) => {
     }
   };
 
-  const getfile = async () => {
-    // API Call 
-
-    const formData = new FormData();
-      formData.append('file', file);
-
-      try{
-    const response = await fetch(`${host}/api/upload/getfile/${formData.file}`,{
-      method: 'GET',
-      headers: {
-        'auth-token' : t,
-      },
-    });
-    if (!response.ok) {
-      console.error('Failed to fetch notes:', response.statusText);
-      return;
+  const getFile = async(id) => {
+    try {
+      const response = await fetch(`${host}/api/upload/getfile/${id}`, {
+        method: 'GET',
+        headers: {
+          'auth-token': t,
+        },
+        
+      });
+      if (!response.ok) {
+        console.error('unable to get file:', response.statusText);
+        return;
+      }
+    } catch (error) {
+      console.error('Error get file:', error.message);
     }
-  
-
-    const json = await response.json() 
-    // console.log(json);
-    setFile(json)
-  }catch (error) {
-    console.error();
   }
-}
 
+  const [imageUrl, setImageUrl] = useState(null);
+
+  const openImageInNewTab = (url) => {
+    window.open(url, '_blank');
+  };
 
   const logout = () => {
     // console.log("logout");
@@ -169,7 +164,10 @@ const NoteState = (props) => {
         isAuthenticated,
         setIsAuthenticated,
         logout,
-        getfile,
+        imageUrl,
+        setImageUrl,
+        openImageInNewTab,
+        getFile
       }}
     >
       {props.children}
