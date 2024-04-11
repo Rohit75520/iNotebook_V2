@@ -77,7 +77,8 @@ const Notes = () => {
                 </div>
                 
                 {notes.map((note) => {
-                    return <Noteitem key={note._id} openEditModal ={openEditModal} note={note} imageUrl={imageUrl} setImageUrl={setImageUrl} openImageInNewTab={openImageInNewTab} />
+                    console.log(note._id);
+                    return <Noteitem key={note._id} openEditModal ={openEditModal} note={note} />
                 })}
             </div>
 

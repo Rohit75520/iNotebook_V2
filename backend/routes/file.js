@@ -73,14 +73,18 @@ router.post('/', upload.single('file'), async (req, res) => {
 router.get('/getfile/:id', async (req, res) => {
     try {
         // Find the file in the database by its ID
-        let file = await File.findById(req.params.id);
+        const fileId = req.params.id
+        console.log(fileId);
+        const file = await File.findById(fileId);
+
         // If file not found, return 404 error
         if (!file) {
             return res.status(404).json({
                 error: 'File not found'
             });
         }
-        const contentType = file.contentType || 'application/octet-stream';
+        const contentType = file.type || 'application/pdf';
+        console.log(contentType);
         // Set the Content-Type header
         res.contentType(contentType);
         // Set Content-Disposition header to specify filename

@@ -97,29 +97,29 @@ const NoteState = (props) => {
     setNotes(newNotes);
   }
 
-  const uploadFile = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
+  // const uploadFile = async (file) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
 
-      const response = await fetch(`${host}/api/upload`, {
-        method: 'POST',
-        headers: {
-          'auth-token': t,
-        },
-        body: formData,
-      });
+  //     const response = await fetch(`${host}/api/upload`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'auth-token': t,
+  //       },
+  //       body: formData,
+  //     });
 
-      if (!response.ok) {
-        console.error('Failed to upload file:', response.statusText);
-        return;
-      }
+  //     if (!response.ok) {
+  //       console.error('Failed to upload file:', response.statusText);
+  //       return;
+  //     }
 
-      console.log('File uploaded successfully');
-    } catch (error) {
-      console.error('Error uploading file:', error.message);
-    }
-  };
+  //     console.log('File uploaded successfully');
+  //   } catch (error) {
+  //     console.error('Error uploading file:', error.message);
+  //   }
+  // };
 
   const getFile = async(id) => {
     try {
@@ -159,7 +159,7 @@ const NoteState = (props) => {
         addNote,
         deleteNote,
         editNote,
-        uploadFile,
+        // uploadFile,
         getNotes,
         isAuthenticated,
         setIsAuthenticated,

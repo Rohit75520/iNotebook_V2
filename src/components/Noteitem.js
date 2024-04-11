@@ -2,18 +2,15 @@ import React, { useContext, useEffect, useState} from "react";
 import NoteContext from "../context/notes/noteContext";
 import ImagePreview from "./ImagePreview";
 
-const Noteitem = ({ note, openEditModal }) => {
+const Noteitem = ({ note }) => {
   // const host = "http://localhost:5000";
   const context = useContext(NoteContext);
   const { deleteNote } = context;
-  const [fileURL, setFileURL] = useState('')
   // const [fileId, setFileId] = useState(null)
- 
-  // const {imageUrl, openImageInNewTab} = context;
-  // const t = localStorage.getItem('token')
 
-
-  // const ref = useRef(null);
+  // useEffect(() => {
+  //   setFileId(note._id);
+  // }, [note._id]);
 
   const handleDelete = async () => {
     try {
@@ -23,7 +20,7 @@ const Noteitem = ({ note, openEditModal }) => {
     }
   };
 
-  const fileId = '661635b72d045b7ce372702c'
+  const fileId = '66179ca9f5a7096413478658'
 
   const host = "http://localhost:5000";
   const t = localStorage.getItem('token')
@@ -39,10 +36,31 @@ const Noteitem = ({ note, openEditModal }) => {
           },
           responseType: 'blob'
         });
-        if (!response.ok) {
+        if (response.ok) {
+          let blob;
+          const contentType = response.headers.get('Content-Type')
+
+          if(contentType && contentType.includes("application/pdf")){
+            const arrayBuffer = await response.arrayBuffer();
+            blob = new Blob([arrayBuffer], {type: 'application/pdf'});
+          } else {
+            blob = await response.blob()
+          }
+
+          console.log(blob);
+          if(!(blob instanceof Blob)){
+            console.error('Response is not a blob:', blob);
+            return;
+          }
+        const url = window.URL.createObjectURL(blob);
+        console.log(url);
+        window.open(url,'_blank');
+        // console.log(response);
+        }else{
           console.error('unable to get file:', response.statusText);
           return;
         }
+
 
         // window.open(`${host}/api/upload/getfile/${fileId}`)
         // const data = response.blob()
@@ -50,24 +68,19 @@ const Noteitem = ({ note, openEditModal }) => {
         // console.log(url);
         // window.open(url,'_blank')
       //   console.log(response);
-      // const fileBlob = await new Blob([response.arrayBuffer()], {type: 'application/pdf'})
-      // //   console.log(fileBlob);
-      // const fileURL = await window.URL.createObjectURL(fileBlob)
-      // // console.log(fileURL);
-      // setFileURL(fileURL)
-      // window.open(fileURL,'_blank')
+      
       // console.log(file);
 
-      const blob = await response.blob();      
-      const reader = new FileReader();     
-      reader.onload = () => {  
-      // Create a Blob URL for the Blob content
-      const blobUrl = URL.createObjectURL(blob);     
-        // Open the Blob URL in a new tab
-        const newTab = window.open();   
-        newTab.document.write(`<iframe src="${blobUrl}" width="100%" height="100%"></iframe>`);  
-      };   
-      reader.readAsArrayBuffer(blob);
+      // const blob = await response.blob();      
+      // const reader = new FileReader();     
+      // reader.onload = () => {  
+      // // Create a Blob URL for the Blob content
+      // const blobUrl = URL.createObjectURL(blob);     
+      //   // Open the Blob URL in a new tab
+      //   const newTab = window.open();   
+      //   newTab.document.write(`<iframe src="${blobUrl}" width="100%" height="100%"></iframe>`);  
+      // };   
+      // reader.readAsArrayBuffer(blob);
 
       
       } catch (error) {
@@ -105,7 +118,7 @@ const Noteitem = ({ note, openEditModal }) => {
           <div className='d-flex align-items-center'>
             <h5 className="card-title">{note?.title}</h5>
             <i className="fa-regular fa-trash-can mx-2" onClick={handleDelete}></i>
-            <i className="fa-solid fa-pen-to-square mx-2" onClick={() => openEditModal(note)}></i>
+            <i className="fa-solid fa-pen-to-square mx-2"></i>
           </div>
           <p className="card-text">{note.description}</p>
           {/* <button className='btn btn-primary' onClick={<ImagePreview filename={selectedImage} />}>preview</button> */}

@@ -52,9 +52,8 @@ const AddNote = ({uploadedImageUrl}) => {
     const handleClick = (e)=>{
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
-        setNote({title: "", description: "", tag: ""})
-        handleSubmit();
-        
+        setNote({title: "", description: "", tag: ""})  
+        handleSubmit()
     }
 
     // const handleFile = () => {
@@ -79,7 +78,7 @@ const AddNote = ({uploadedImageUrl}) => {
     return (
       <div className="container my-3">
         <h2>Add a Note</h2>
-        <form className="my-3" onSubmit={handleClick} noValidate>
+        <form className="my-3" noValidate>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Title
