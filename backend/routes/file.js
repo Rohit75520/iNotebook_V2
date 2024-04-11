@@ -21,7 +21,8 @@ router.post('/', upload.single('file'), async (req, res) => {
         }
         // console.log('1');
 
-            const { userId } = req.body; // Assuming userId is passed in the request body
+            const userId = req.body
+            // const { userId } = req.params.id; // Assuming userId is passed in the request body
             // console.log('6');
 
             const newFile = new File({
@@ -74,7 +75,8 @@ router.get('/getfile/:id', async (req, res) => {
     try {
         // Find the file in the database by its ID
         const fileId = req.params.id
-        console.log(fileId);
+        // const fileId = req.body
+        // console.log(fileId);
         const file = await File.findById(fileId);
 
         // If file not found, return 404 error
@@ -84,7 +86,7 @@ router.get('/getfile/:id', async (req, res) => {
             });
         }
         const contentType = file.type || 'application/pdf';
-        console.log(contentType);
+        // console.log(contentType);
         // Set the Content-Type header
         res.contentType(contentType);
         // Set Content-Disposition header to specify filename
