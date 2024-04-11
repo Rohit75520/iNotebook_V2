@@ -60,7 +60,6 @@ const Notes = () => {
         }
     };
 
-    const [imageUrl, setImageUrl] = useState(null);
 
     const openEditModal = (note) => {
         setEditedNote(note);
@@ -78,7 +77,7 @@ const Notes = () => {
                 
                 {notes.map((note) => {
                     console.log(note._id);
-                    return <Noteitem key={note._id} openEditModal ={openEditModal} note={note} />
+                    return <Noteitem key={note._id} openEditModal ={openEditModal} note={note}/>
                 })}
             </div>
 
