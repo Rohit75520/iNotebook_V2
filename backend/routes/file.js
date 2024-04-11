@@ -21,7 +21,7 @@ router.post('/', upload.single('file'), async (req, res) => {
         }
         // console.log('1');
 
-            const userId = req.body
+            const {userId} = req.body
             // const { userId } = req.params.id; // Assuming userId is passed in the request body
             // console.log('6');
 

@@ -20,7 +20,7 @@ const Noteitem = ({ note }) => {
     }
   };
 
-  const fileId = '66179ca9f5a7096413478658'
+  const fileId = '6617a0d6dbc07ac159dcc1b7'
 
   const host = "http://localhost:5000";
   const t = localStorage.getItem('token')

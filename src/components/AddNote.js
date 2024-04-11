@@ -39,7 +39,6 @@ const AddNote = ({uploadedImageUrl}) => {
       alert('Failed to upload file');
     }
     if (!error) { // Assuming 'error' is set on upload failure
-      setImageUrl(uploadedImageUrl); // Replace with actual URL from response
       alert('File uploaded successfully');
     } else {
       console.error('Error uploading file:', error);
