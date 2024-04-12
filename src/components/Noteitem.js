@@ -22,7 +22,7 @@ const Noteitem = ({ note, handleUpdate, openEditModal }) => {
     }
   };
 
-  const fileId = '6617a0d6dbc07ac159dcc1b7'
+  const fileId = '6618caee208e01e2029baf23'
 
   const host = "http://localhost:5000";
   const t = localStorage.getItem('token')
@@ -71,9 +71,7 @@ const Noteitem = ({ note, handleUpdate, openEditModal }) => {
       }
     }
 
-    const handleClose = () => {
-      setShowIframe(false);
-    }
+
 
 
   return (

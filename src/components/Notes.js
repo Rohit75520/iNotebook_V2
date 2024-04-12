@@ -31,7 +31,7 @@ const Notes = () => {
     const history = useHistory();
 
     const handleUpdate = async (noteId) => {
-        console.log(noteId);
+        // console.log(noteId);
         try {
             const response = await fetch(`${host}/api/notes/updatenote/${noteId}`, {
                 method: 'PUT',
@@ -68,7 +68,7 @@ const Notes = () => {
 
     return (
         <>
-            <AddNote imageUrl={imageUrl}/>
+            <AddNote/>
             <div className="row my-3">
                 <h2>Your Notes</h2>
                 <div className="container mx-2">

@@ -3,8 +3,21 @@ const router = express.Router();
 const multer = require('multer');
 const File = require('../models/File');
 
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'application/pdf' || 
+        file.mimetype === 'image/jpeg' || 
+        file.mimetype === 'image/jpg' || 
+        file.mimetype === 'image/png') {
+      cb(null, true); // Accept the file
+    } else {
+      cb(new Error('Invalid file type. Only PDF, JPEG, JPG, and PNG files are allowed.'));
+    }
+  };
 
-const upload = multer({ dest: null});
+const upload = multer({
+    dest: null,
+    fileFilter: fileFilter
+});
 
 //Router 5: api to upload files to database
 router.post('/', upload.single('file'), async (req, res) => {
@@ -76,7 +89,7 @@ router.get('/getfile/:id', async (req, res) => {
         // Find the file in the database by its ID
         const fileId = req.params.id
         // const fileId = req.body
-        // console.log(fileId);
+        console.log(fileId);
         const file = await File.findById(fileId);
 
         // If file not found, return 404 error

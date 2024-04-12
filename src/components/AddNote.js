@@ -135,6 +135,7 @@ const AddNote = ({uploadedImageUrl}) => {
                 id="file"
                 name="file"
                 ref={fileRef}
+                accept=".pdf,.jpeg,.jpg,.png"
                 onChange={handleFileChange}
               />
             </form>
