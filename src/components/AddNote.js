@@ -1,20 +1,21 @@
-import React, {useContext, useRef, useState} from 'react'
+import React, {createContext, useContext, useRef, useState} from 'react'
 import noteContext from "../context/notes/noteContext"
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
+const fileIdContext = createContext();
+
 const AddNote = ({uploadedImageUrl}) => {
     const context = useContext(noteContext);
     const history = useHistory
-    const {addNote, setImageUrl} = context;
+    const {addNote, setImageUrl,uploadFile, fileId} = context;
     const fileRef = useRef(null)
     // console.log(file);
     // console.log(addNote);
-    const host = "http://localhost:5000"
     const [file,setFile] = useState()
+    
     const [error, setError] = useState(null);
     // const [imageUrl, setImageUrl] = useState(null)
-
 
 
   const handleSubmit = async () => {
@@ -24,16 +25,7 @@ const AddNote = ({uploadedImageUrl}) => {
     }
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      await axios.post(`${host}/api/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      alert('File uploaded successfully');
+      uploadFile(file);
     } catch (error) {
       console.error('Error uploading file:', error);
       alert('Failed to upload file');
@@ -42,7 +34,6 @@ const AddNote = ({uploadedImageUrl}) => {
       alert('File uploaded successfully');
     } else {
       console.error('Error uploading file:', error);
-      alert('Failed to upload file');
     }
   };
 
@@ -50,26 +41,21 @@ const AddNote = ({uploadedImageUrl}) => {
 
     const handleClick = (e)=>{
         e.preventDefault();
-        addNote(note.title, note.description, note.tag);
-        setNote({title: "", description: "", tag: ""})  
         handleSubmit()
+        addNote(note.title, note.description, note.tag, note.fileId);
+        console.log(note.fileId);
+        setNote({title: "", description: "", tag: "", fileId: fileId})  
     }
-
-    // const handleFile = () => {
-    //   fileRef.current.click()
-    // } 
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        // console.log(file);
+        console.log(file);
         setFile(file)
         const fileBlob = new Blob([file], { type: 'application/pdf' })
         const fileURL = window.URL.createObjectURL(fileBlob);
         setImageUrl(fileURL)
-        console.log(fileURL);
-        // console.log(URL.createObjectURL(file));
       };
-      // console.log(imageUrl);
+
 
     const onChange = (e)=>{
         setNote({...note, [e.target.name]: e.target.value})
@@ -77,7 +63,7 @@ const AddNote = ({uploadedImageUrl}) => {
     return (
       <div className="container my-3">
         <h2>Add a Note</h2>
-        <form className="my-3" noValidate>
+        <form className="my-3" onSubmit={handleClick}noValidate>
           <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Title

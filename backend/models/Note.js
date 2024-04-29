@@ -18,6 +18,10 @@ const NotesSchema = new Schema({
     tag:{
         type: String,
     },
+    fileId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'File'
+    },
     date:{
         type: Date,
         default: Date.now

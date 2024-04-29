@@ -1,18 +1,20 @@
-import React, { useContext, useRef, useState} from "react";
+import React, { useContext, useRef,useEffect, useState} from "react";
 import NoteContext from "../context/notes/noteContext";
 
 const Noteitem = ({ note, handleUpdate, openEditModal }) => {
   // const host = "http://localhost:5000";
   const context = useContext(NoteContext);
-  const { deleteNote } = context;
+  const { deleteNote, fileId } = context;
   const [iframeUrl, setIframeUrl] = useState(null)
   const [showIframe, setShowIframe] = useState(false)
   const refClose = useRef(null);
-  // const [fileId, setFileId] = useState(null)
+  const [fileid, setFileId] = useState(null)
+  const { notes, getNotes } = context;
 
-  // useEffect(() => {
-  //   setFileId(note._id);
-  // }, [note._id]);
+  useEffect(() => {
+    setFileId(fileId);
+  }, [note.fileId, note._id]);
+  console.log(note.fileId);
 
   const handleDelete = async () => {
     try {
@@ -22,18 +24,17 @@ const Noteitem = ({ note, handleUpdate, openEditModal }) => {
     }
   };
 
-  const fileId = '6618caee208e01e2029baf23'
+  // const fileId = '661cd30470fdc25f606f4298'
 
   const host = "http://localhost:5000";
   const t = localStorage.getItem('token')
   
   const handlePreview = async () => {
-    // console.log(fileId);
+    console.log(fileId);
       try {
-        const response = await fetch(`${host}/api/upload/getfile/${fileId}`, {
+        const response = await fetch(`${host}/api/file/getfile/${fileid}`, {
           method: 'GET',
           headers: {
-            // 'Content-Type': '',
             'auth-token': t
           },
           responseType: 'blob'
@@ -48,8 +49,6 @@ const Noteitem = ({ note, handleUpdate, openEditModal }) => {
           } else {
             blob = await response.blob()
           }
-
-          console.log(blob);
           if(!(blob instanceof Blob)){
             console.error('Response is not a blob:', blob);
             return;
@@ -57,9 +56,7 @@ const Noteitem = ({ note, handleUpdate, openEditModal }) => {
         const url = window.URL.createObjectURL(blob);
         setIframeUrl(url);
         setShowIframe(true)
-        // console.log(url);
-        // window.open(url,'_blank');
-        // console.log(response);
+
         }else{
           console.error('unable to get file:', response.statusText);
           return;

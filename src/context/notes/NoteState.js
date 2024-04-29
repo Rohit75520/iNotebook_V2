@@ -1,11 +1,13 @@
 import React,{ useState } from "react";
 import NoteContext from "./noteContext";
+import axios from 'axios'
 
 const NoteState = (props) => {
   const host = "http://localhost:5000"
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const notesInitial = [{title:"", description:"", tag:"" }]
   const [notes, setNotes] = useState([notesInitial])
+  const [fileId, setFileId] = useState(null)
 
   // const setFile = e.target.files[0]
   
@@ -37,7 +39,7 @@ const NoteState = (props) => {
   }
 
   // Add a Note
-  const addNote = async (title, description, tag) => {
+  const addNote = async (title, description, tag, fileId) => {
     // TODO: API Call
     // API Call 
     const response = await fetch(`${host}/api/notes/addnote/`, {
@@ -46,7 +48,7 @@ const NoteState = (props) => {
         'Content-Type': 'application/json',
         "auth-token": t
       },
-      body: JSON.stringify({title, description, tag})
+      body: JSON.stringify({title, description, tag, fileId})
     });
 
     const note = await response.json();
@@ -97,33 +99,37 @@ const NoteState = (props) => {
     setNotes(newNotes);
   }
 
-  // const uploadFile = async (file) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('file', file);
+  const uploadFile = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-  //     const response = await fetch(`${host}/api/upload`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'auth-token': t,
-  //       },
-  //       body: formData,
-  //     });
+      const response = await axios.post(`${host}/api/file/upload`,formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'auth-token': t
+        },
+        body: formData,
+      });
 
-  //     if (!response.ok) {
-  //       console.error('Failed to upload file:', response.statusText);
-  //       return;
-  //     }
+      setFileId(response.data.fileId)
+      console.log(fileId);
+      alert('File uploaded successfully');
 
-  //     console.log('File uploaded successfully');
-  //   } catch (error) {
-  //     console.error('Error uploading file:', error.message);
-  //   }
-  // };
+      if (!response.ok) {
+        console.error('Failed to upload file:', response.statusText);
+        return;
+      }
+
+      console.log('File uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading file:', error.message);
+    }
+  };
 
   const getFile = async(id) => {
     try {
-      const response = await fetch(`${host}/api/upload/getfile/${id}`, {
+      const response = await fetch(`${host}/api/file/getfile/${id}`, {
         method: 'GET',
         headers: {
           'auth-token': t,
@@ -159,7 +165,6 @@ const NoteState = (props) => {
         addNote,
         deleteNote,
         editNote,
-        // uploadFile,
         getNotes,
         isAuthenticated,
         setIsAuthenticated,
@@ -167,7 +172,9 @@ const NoteState = (props) => {
         imageUrl,
         setImageUrl,
         openImageInNewTab,
-        getFile
+        getFile,
+        uploadFile,
+        fileId
       }}
     >
       {props.children}

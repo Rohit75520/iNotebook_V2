@@ -10,6 +10,7 @@ const Notes = () => {
     const [updatedTitle, setUpdatedTitle] = useState("");
     const [updatedDescription, setUpdatedDescription] = useState("");
     const [updatedTag, setUpdatedTag] = useState("");
+    // const [updatedFile, setUpdatedFile] = useState("")
     const [editedNote, setEditedNote] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const t = localStorage.getItem('token')
@@ -26,6 +27,7 @@ const Notes = () => {
         if (name === "etitle") setUpdatedTitle(value);
         else if (name === "edescription") setUpdatedDescription(value);
         else if (name === "etag") setUpdatedTag(value);
+        // else if (name == "efile") setUpdatedFile(value);
     };
 
     const history = useHistory();
@@ -76,7 +78,7 @@ const Notes = () => {
                 </div>
                 
                 {notes.map((note) => {
-                    console.log(note._id);
+                    // console.log(note._id);
                     return <Noteitem key={note._id} openEditModal ={openEditModal} note={note}/>
                 })}
             </div>

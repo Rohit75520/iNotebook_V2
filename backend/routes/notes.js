@@ -3,7 +3,6 @@ const { body, validationResult } = require('express-validator');
 const fetchuser = require('../middleware/fetchuser');
 const router = express.Router();
 const Note = require('../models/Note');
-// const File = require('../models/File')
 
 // Route 1: get loggedin user Details usign : POST "/api/notes/fetchallnotes". Login required
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
@@ -18,6 +17,7 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
     }
 })
 
+
 // Route 2: Add a new Note using : POST "/api/notes/addnote". Login required
 router.post('/addnote',fetchuser, [
     body('title', 'Enter a valid title').isLength({ min: 3 }),
@@ -25,6 +25,16 @@ router.post('/addnote',fetchuser, [
     
      try {
         const { title, description, tag } = req.body;
+        // const fileId = '6621052dff5497cdbd6990b2';
+        // console.log('File ID in notes.js: ',fileId);
+        const fileId = req.fileId
+        console.log(fileId);
+
+        if (!fileId) {
+            return res.status(400).json({ error: 'File ID is required' });
+        }
+
+
         // if there are errors, return bad request and the errors
         const errors = validationResult(req);
         if(!errors.isEmpty()){
@@ -32,8 +42,12 @@ router.post('/addnote',fetchuser, [
         }
         // console.log(req.user.id);
         const note = new Note({
-            title, description, tag, user: req.user.id
-        })
+          title,
+          description,
+          tag,
+          user: req.user.id,
+          fileId: fileId,
+        });
 
         const savedNote = await note.save()
 
