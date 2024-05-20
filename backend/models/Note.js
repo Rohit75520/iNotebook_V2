@@ -19,7 +19,7 @@ const NotesSchema = new Schema({
         type: String,
     },
     fileId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'File'
     },
     date:{

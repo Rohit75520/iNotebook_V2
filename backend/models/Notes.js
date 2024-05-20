@@ -17,6 +17,10 @@ const NotesSchema = new Schema({
     tag:{
         type: String,
     },
+    fileId: {
+        type: String,
+        ref: 'File'
+    },
     date:{
         type: Date,
         default: Date.now

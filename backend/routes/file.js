@@ -57,7 +57,7 @@ router.post('/upload', upload.single('file'), fetchuser, async (req, res, next) 
         if(!savedFile) {
             return res.status(500).json({ error: 'Failed to save uploaded file'});
         }
-        return res.json({ message: 'Form data saved successfully!!', fileId: savedFile._id})
+        return res.json({ message: 'Form data saved successfully!!', fileId: req.fileId})
         // return res.redirect(`/addnote?fileId=${savedFile._id}`)
         
     

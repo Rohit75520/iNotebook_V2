@@ -27,8 +27,8 @@ router.post('/addnote',fetchuser, [
         const { title, description, tag, fileId } = req.body;
         // const fileId = '6621052dff5497cdbd6990b2';
         // console.log('File ID in notes.js: ',fileId);
-        
-
+        // const fileId = req.fileId
+        // console.log(fileId);
 
         // if there are errors, return bad request and the errors
         const errors = validationResult(req);

@@ -8,7 +8,7 @@ const fileIdContext = createContext();
 const AddNote = ({uploadedImageUrl}) => {
     const context = useContext(noteContext);
     const history = useHistory
-    const {addNote, setImageUrl,uploadFile, fileId} = context;
+    const {addNote, setImageUrl,uploadFile} = context;
     const fileRef = useRef(null)
     // console.log(file);
     // console.log(addNote);
@@ -25,27 +25,26 @@ const AddNote = ({uploadedImageUrl}) => {
     }
 
     try {
-      uploadFile(file);
+      const fileId = await uploadFile(file);
+      return fileId;
     } catch (error) {
       console.error('Error uploading file:', error);
       alert('Failed to upload file');
-    }
-    if (!error) { // Assuming 'error' is set on upload failure
-      alert('File uploaded successfully');
-    } else {
-      console.error('Error uploading file:', error);
+      throw error
     }
   };
 
-    const [note, setNote] = useState({title: "", description: "", tag: "" })
+    const [note, setNote] = useState({title: "", description: "", tag: "",fileId: "" })
 
-    const handleClick = (e)=>{
+    const handleClick = async (e)=>{
         e.preventDefault();
-        handleSubmit()
-        addNote(note.title, note.description, note.tag, note.fileId);
-        console.log(note.fileId);
-        setNote({title: "", description: "", tag: "", fileId: fileId})  
-    }
+        const fileId = await handleSubmit()
+        addNote(note.title, note.description, note.tag, fileId);
+        setNote({title: "", description: "", tag: "" })  
+        // console.log('1');
+        // setNote(null)
+        // history.push('/home')
+      }
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -120,9 +119,11 @@ const AddNote = ({uploadedImageUrl}) => {
                 className="form-control"
                 id="file"
                 name="file"
+                // value={fileId}
                 ref={fileRef}
                 accept=".pdf,.jpeg,.jpg,.png"
                 onChange={handleFileChange}
+                required
               />
             </form>
               {file ? <img src={URL.createObjectURL(file)} alt='uploaded image' className="form-control" style={{ maxWidth: '100px', maxHeight: '100px' }}/> : <img src='

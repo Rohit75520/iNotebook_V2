@@ -4,7 +4,7 @@ import NoteContext from "../context/notes/noteContext";
 const Noteitem = ({ note, handleUpdate, openEditModal }) => {
   // const host = "http://localhost:5000";
   const context = useContext(NoteContext);
-  const { deleteNote, fileId } = context;
+  const { deleteNote } = context;
   const [iframeUrl, setIframeUrl] = useState(null)
   const [showIframe, setShowIframe] = useState(false)
   const refClose = useRef(null);
@@ -12,7 +12,7 @@ const Noteitem = ({ note, handleUpdate, openEditModal }) => {
   const { notes, getNotes } = context;
 
   useEffect(() => {
-    setFileId(fileId);
+    note.fileId=fileid
   }, [note.fileId, note._id]);
   console.log(note.fileId);
 
@@ -30,9 +30,10 @@ const Noteitem = ({ note, handleUpdate, openEditModal }) => {
   const t = localStorage.getItem('token')
   
   const handlePreview = async () => {
-    console.log(fileId);
+    console.log(note.fileId);
       try {
-        const response = await fetch(`${host}/api/file/getfile/${fileid}`, {
+        console.log(note.fileId);
+        const response = await fetch(`${host}/api/file/getfile/${note.fileId}`, {
           method: 'GET',
           headers: {
             'auth-token': t

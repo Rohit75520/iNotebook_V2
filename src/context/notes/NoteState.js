@@ -7,7 +7,7 @@ const NoteState = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const notesInitial = [{title:"", description:"", tag:"" }]
   const [notes, setNotes] = useState([notesInitial])
-  const [fileId, setFileId] = useState(null)
+  // const [fileId, setFileId] = useState(null)
 
   // const setFile = e.target.files[0]
   
@@ -111,19 +111,21 @@ const NoteState = (props) => {
         },
         body: formData,
       });
-
-      setFileId(response.data.fileId)
+      console.log('Upload response:', response);
+      const fileId = response.data.fileId
       console.log(fileId);
       alert('File uploaded successfully');
 
-      if (!response.ok) {
-        console.error('Failed to upload file:', response.statusText);
-        return;
+      if (response.status === 200 && response.data.fileId) {
+        return response.data.fileId;
+      } else {
+        throw new Error('Failed to get fileId from the response')
       }
 
-      console.log('File uploaded successfully');
+      // console.log('File uploaded successfully');
     } catch (error) {
       console.error('Error uploading file:', error.message);
+      throw error;
     }
   };
 
@@ -174,7 +176,6 @@ const NoteState = (props) => {
         openImageInNewTab,
         getFile,
         uploadFile,
-        fileId
       }}
     >
       {props.children}
