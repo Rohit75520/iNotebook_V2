@@ -7,7 +7,7 @@ const NoteState = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const notesInitial = [{title:"", description:"", tag:"" }]
   const [notes, setNotes] = useState([notesInitial])
-  // const [fileId, setFileId] = useState(null)
+  const [fileId, setFileId] = useState(null)
 
   // const setFile = e.target.files[0]
   
@@ -112,7 +112,7 @@ const NoteState = (props) => {
         body: formData,
       });
       console.log('Upload response:', response);
-      const fileId = response.data.fileId
+      setFileId(response.data.fileId)
       console.log(fileId);
       alert('File uploaded successfully');
 
@@ -129,14 +129,13 @@ const NoteState = (props) => {
     }
   };
 
-  const getFile = async(id) => {
+  const getFile = async() => {
     try {
-      const response = await fetch(`${host}/api/file/getfile/${id}`, {
+      const response = await fetch(`${host}/api/file/getfile/${fileId}`, {
         method: 'GET',
         headers: {
           'auth-token': t,
-        },
-        
+        },        
       });
       if (!response.ok) {
         console.error('unable to get file:', response.statusText);
@@ -176,6 +175,7 @@ const NoteState = (props) => {
         openImageInNewTab,
         getFile,
         uploadFile,
+        fileId
       }}
     >
       {props.children}
